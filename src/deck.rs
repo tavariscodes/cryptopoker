@@ -13,6 +13,19 @@ pub mod deck {
         Spade,
         Diamond
     }
+
+    impl Suit {
+        /// Returns a suit's corresponding character
+        pub fn to_char(&self) -> char {
+            match self {
+                Suit::Club => 'c',
+                Suit::Heart => 'h',
+                Suit::Spade => 's',
+                Suit::Diamond => 'd',
+                _ => (panic!("Error: item not of type - `Suit`"))
+            }
+        }
+    }
     
     #[derive(Debug, PartialEq, Copy, Clone)]
     /// The fourteen different card rankings
