@@ -4,7 +4,7 @@
 //! containing the neccessary functionality
 //! for a proper deck implementation.
 
-use rand::{thread_rng, Rng};
+use rand;
 
 /// The four different card suits 
 #[derive(Debug)]
