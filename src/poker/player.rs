@@ -21,8 +21,8 @@ pub struct Player {
     pub in_hand: bool,
     pub has_cards: bool,
     //pub hand: Hand,
-    pub bet: f64,
-    chips: f64,
+    bet: f64,
+    chips: f64,                     
     room: Option<String>,           // consider changing type to `table` (events) instead
     sitting_on_table: Option<String>,       // table id 
     seat: Option<u8>,                       // seat number player is sitting
@@ -50,6 +50,11 @@ impl Player {
         }
     }
 
+    /// Adds chips to player's account
+    fn deposit(&mut self, amount: f64) {
+        self.chips += amount;
+    }
+
     /// initiliaze a new round, by resetting players
     ///  public props
     pub fn prepare_new_round(&mut self) {
@@ -75,12 +80,49 @@ impl Player {
     /// Sits player out from 
     /// table
     pub fn sit_out(&mut self) {
-        self.in_hand = false;
-        self.sitting_in = false;
+        match &self.sitting_on_table {
+            None => panic!("Error: player not sitting on table"),
+            Some(_table) => {
+                self.in_hand = false;
+                self.sitting_in = false;
+            }
+        }
+    }
+
+    /// Exits player from table
+    pub fn leave_table(&mut self) {
+        match &self.sitting_on_table {
+            None => panic!("Error: player not sitting on table"),
+            Some(_table) => {
+                self.sit_out();
+                // add chips from table 
+                // into player's bankroll
+                self.chips += self.chips_in_play;
+                self.chips_in_play = 0.0;           
+                self.sitting_on_table = None;
+                self.seat = None;
+            }
+        }
     }
     
     /// The action of betting
-    pub fn bet(amount: f64) {
-        // etsy 
+    pub fn bet(&mut self, mut amount: f64) {
+        if amount > self.chips_in_play {
+            amount = self.chips_in_play;
+        }
+        self.chips_in_play -= amount;
+        self.bet += amount 
+    }
+
+    /// The action of raising
+    pub fn raise(&mut self, amount: f64) {
+        self.bet(amount);
+    }
+
+    /// The action of folding a hand
+    pub fn fold (&mut self) {
+        self.cards = None;
+        self.has_cards = false;
+        self.in_hand = false;
     }
 }
