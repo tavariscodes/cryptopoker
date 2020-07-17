@@ -69,32 +69,48 @@ impl Table {
     // add method to increase # of players_sitting
     // when player sits down. 
 
-    
+    pub fn find_active_seat(&mut self){
+        let mut next_active_seat = self.dealer_seat + 1;
+        
+        while self.seats[next_active_seat].in_hand == false{
+            if next_active_seat == self.seats.len() - 1{
+                next_active_seat -= self.seats.len()
+        }
+        next_active_seat += 1
+        }
+    }
 
     /// Starts a new round
     pub fn start_round(&mut self) {
         if self.players_sitting > 1 {
             self.deck.shuffle();
-            self.dealer_seat += 1;
-            while self.seats[self.dealer_seat].in_hand == false {
-                self.dealer_seat += 1;
-            }
-            let mut small_blind = self.dealer_seat + 1;
-            while self.seats[small_blind].in_hand == false{
-                small_blind += 1;
-            }
-            let mut big_blind = small_blind + 1;
-            while self.seats[big_blind].in_hand == false{
-                big_blind += 1;
-            }
+            // self.dealer_seat += 1;
+            // while self.seats[self.dealer_seat].in_hand == false { //dealer seat moves to next active seat
+            //     if self.dealer_seat == self.seats.len() - 1 {
+            //         self.dealer_seat -= self.seats.len();
+            //     }
+            //     self.dealer_seat += 1;
+            // }
+            // let mut small_blind = self.dealer_seat + 1; 
+            // while self.seats[small_blind].in_hand == false{ //small blind moves to next active seat after dealer
+            //     small_blind += 1;
+            // }
+            // let mut big_blind = small_blind + 1;
+            // while self.seats[big_blind].in_hand == false{ //big blind moves to next active seat after small blind
+            //     big_blind += 1;
+            // }
             self.betting_round = Some(BettingRound::Preflop);
             for player in self.seats.iter_mut() {
+                
                 player.prepare_new_round();
+                // if player.in_hand == true && self.seat = self.dealer_seat {
+                    
+                }
             }
-        };
+        }
         // deal cards
         // post blinds
-    }
+    
 
     /// Adds player to table 
     pub fn player_joined(&mut self, player: player::Player, seat: u8, chips: f64) {
