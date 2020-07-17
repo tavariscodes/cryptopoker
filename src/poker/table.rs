@@ -37,7 +37,7 @@ pub struct Table {
     community_cards: [Option<deck::Card>; 5],
     pub seats: Vec<player::Player>,     // make private
     deck: deck::Deck,
-    dealer_seat: usize,    //  gets vector of seats
+    pub dealer_seat: usize,    //  gets vector of seats
     pot: Pot,
     players_sitting: u8,
     players_in_hand: u8,
@@ -77,7 +77,16 @@ impl Table {
             self.deck.shuffle();
             self.dealer_seat += 1;
             while self.seats[self.dealer_seat].in_hand == false {
-                self.dealer_seat += 1; }
+                self.dealer_seat += 1;
+            }
+            let mut small_blind = self.dealer_seat + 1;
+            while self.seats[small_blind].in_hand == false{
+                small_blind += 1;
+            }
+            let mut big_blind = small_blind + 1;
+            while self.seats[big_blind].in_hand == false{
+                big_blind += 1;
+            }
             self.betting_round = Some(BettingRound::Preflop);
             for player in self.seats.iter_mut() {
                 player.prepare_new_round();
@@ -117,7 +126,8 @@ impl BettingRound {
         }
     }
 
-    fn preflop(&self) {}
+    fn preflop(&self) {     
+    }
 
     fn flop(&self) {}
 
