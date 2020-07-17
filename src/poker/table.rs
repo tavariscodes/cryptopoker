@@ -37,7 +37,7 @@ pub struct Table {
     community_cards: [Option<deck::Card>; 5],
     pub seats: Vec<player::Player>,     // make private
     deck: deck::Deck,
-    dealer_seat: u8,
+    dealer_seat: u8,    //  gets vector of seats
     pot: Pot,
     players_sitting: u8,
     players_in_hand: u8,
@@ -57,6 +57,7 @@ impl Table {
             active_seat: 0,
             seat_count: seat_count,
             seats: vec![],
+            dealer_seat: 0,
             deck: deck::Deck::new(),
             community_cards: [None, None, None, None, None],
             pot: Pot::new(),
