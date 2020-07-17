@@ -71,14 +71,15 @@ impl Table {
 
     pub fn find_active_seat(&mut self)-> usize{
         let mut next_active_seat = self.dealer_seat + 1;
-        if next_active_seat == self.seats.len() - 1{
+        if next_active_seat == self.seats.len() {
             next_active_seat -= self.seats.len()
         }
-        while self.seats[next_active_seat].in_hand == false{
-            if next_active_seat == self.seats.len() - 1{
+        while self.seats[next_active_seat].sitting_in == false{
+           
+        next_active_seat += 1;
+            if next_active_seat == self.seats.len(){
                 next_active_seat -= self.seats.len()
-        }
-        next_active_seat += 1
+    }
         }
         return next_active_seat;
     }
