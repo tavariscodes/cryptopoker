@@ -69,15 +69,18 @@ impl Table {
     // add method to increase # of players_sitting
     // when player sits down. 
 
-    pub fn find_active_seat(&mut self){
+    pub fn find_active_seat(&mut self)-> usize{
         let mut next_active_seat = self.dealer_seat + 1;
-        
+        if next_active_seat == self.seats.len() - 1{
+            next_active_seat -= self.seats.len()
+        }
         while self.seats[next_active_seat].in_hand == false{
             if next_active_seat == self.seats.len() - 1{
                 next_active_seat -= self.seats.len()
         }
         next_active_seat += 1
         }
+        return next_active_seat;
     }
 
     /// Starts a new round
