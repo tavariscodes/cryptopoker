@@ -4,8 +4,6 @@
 //! implements the needed functionality
 //! for creating a poker table
 //! 
-
-
 use crate::poker::deck;
 use crate::poker::player;
 
@@ -39,6 +37,7 @@ pub struct Table {
     community_cards: [Option<deck::Card>; 5],
     pub seats: Vec<player::Player>,     // make private
     deck: deck::Deck,
+    dealer_seat: u8,
     pot: Pot,
     players_sitting: u8,
     players_in_hand: u8,
@@ -73,20 +72,19 @@ impl Table {
 
     /// Starts a new round
     pub fn start_round(&mut self) {
-        if (self.players_sitting > 1) {
+        if self.players_sitting > 1 {
             self.deck.shuffle();    
             self.betting_round = Some(BettingRound::Preflop);
             for player in self.seats.iter_mut() {
                 player.prepare_new_round();
             }
         };
-        
         // deal cards
         // post blinds
     }
 
-    /// total 
-    pub fn player_joined(&mut self, player: player::Player) {
+    /// Adds player to table 
+    pub fn player_joined(&mut self, player: player::Player, seat: u8, chips: f64) {
         self.seats.push(player);
         self.players_sitting += 1;
     }
@@ -102,7 +100,27 @@ enum BettingRound {
 }
 
 impl BettingRound {
-    /// Starts a particular betting round
-    fn initialize(round: BettingRound) {
+    /// initalizes a particular betting round
+    fn initialize(&mut self, round: BettingRound) -> () {
+        // action to next player
+        match round {
+            BettingRound::Preflop => self.preflop(),
+            BettingRound::Flop => self.flop(),
+            BettingRound::Turn => self.turn(),
+            BettingRound::River => self.river(),
+            BettingRound::Showdown => self.showdown(),
+            _ => panic!("Error: Method requires betting round to be specfied.")
+        }
     }
+
+    fn preflop(&self) {}
+
+    fn flop(&self) {}
+
+    fn turn(&self) {}
+    
+    fn river(&self) {}
+     
+    fn showdown(&self) {}
+    
 }
