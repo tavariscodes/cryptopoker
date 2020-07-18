@@ -25,7 +25,7 @@ pub struct Player {
     chips: f64,                     
     room: Option<String>,           // consider changing type to `table` (events) instead
     sitting_on_table: Option<String>,       // table id 
-    seat: Option<u8>,                       // seat number player is sitting
+    pub seat: Option<usize>,                       // seat number player is sitting
     cards: Option<Hand> ,           // players card
     evaluated_hand: String          // winning hand type
 }

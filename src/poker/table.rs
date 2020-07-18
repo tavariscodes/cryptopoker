@@ -70,17 +70,30 @@ impl Table {
     // when player sits down. 
 
     pub fn find_active_seat(&mut self)-> usize{
-        let mut next_active_seat = self.dealer_seat + 1;
-        if next_active_seat == self.seats.len() {
-            next_active_seat -= self.seats.len()
+        // let mut next_active_seat = self.dealer_seat + 1;
+        // if next_active_seat == self.seats.len() {
+        //     next_active_seat -= self.seats.len()
+        // }
+        
+        if self.dealer_seat != player::Player.seat{
+            let mut next_active_seat = self.seats[0].seat;
         }
-        while self.seats[next_active_seat].sitting_in == false{
+        else {
+            let mut next_active_seat= self.dealer_seat + 1;
+        }
+        let mut next_active_index = .find(self.dealer_seat == self.seats.player.seat);
+        next_active_index += 1
+        if next_active_seat == self.seats.len(){
+            next_active_seat -= self.seats.len();
+        }
+        while self.seats[next_active_index].sitting_in == false{
            
         next_active_seat += 1;
             if next_active_seat == self.seats.len(){
-                next_active_seat -= self.seats.len()
+                next_active_seat -= self.seats.len();
     }
         }
+        self.dealer_seat = self.seats[next_active_index].player.seat;
         return next_active_seat;
     }
 

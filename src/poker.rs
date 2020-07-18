@@ -25,9 +25,9 @@ mod tests {
     #[test]
     fn test_find_active_seat(){
         let table_id= String::from("721-11");
-        let mut player1 = player::Player::new(String::from("Tavaris"), 60.0, true);
-        let mut player2 = player::Player::new(String::from("Whoops"), 60.0, true);
-        let mut player3 = player::Player::new(String::from("Jack"), 60.0, true);
+        let mut player1 = player::Player::new(String::from("Tavaris"), 20.00, true);
+        let mut player2 = player::Player::new(String::from("Whoops"), 20.00, true);
+        let mut player3 = player::Player::new(String::from("Jack"), 20.00, true);
         let mut table = table::Table::new(table_id, 0.10, 0.20, 5.00, 20.00, 6);
         table.player_joined(player1,3,20.00);
         table.player_joined(player2,4,20.00);
