@@ -171,3 +171,62 @@ impl BettingRound {
     fn showdown(&self) {}
     
 }
+enum HandRanking {
+    HighCard,
+    Pair,
+    TwoPair,
+    ThreeOfAKind,
+    Straight,
+    Flush,
+    FullHouse,
+    FourOfAKind,
+    StraightFlush,
+    RoyalFlush
+}
+impl HandRanking{
+    fn HandComparison(&self){
+        match HandStrength{
+            HandRanking::HighCard,
+            HandRanking::Pair,
+            HandRanking::TwoPair,
+            HandRanking::ThreeOfAKind,
+            HandRanking::Straight,
+            HandRanking::Flush,
+            HandRanking::FullHouse,
+            HandRanking::FourOfAKind,
+            HandRanking::StraightFlush,
+            HandRanking::RoyalFlush
+        }
+        let mut evaluated_hand = vec![];
+        if evaluated_hand = self.RoyalFlush {
+            Player.evaluated_hand = self.RoyalFlush
+        } 
+        else if evaluated_hand == self.StraightFlush && evaluated_hand !== self.RoyalFlush{
+            Player.evaluated_hand = self.StraightFlush;
+        }
+        else if evaluated_hand == self.FourOfAKind && (evaluated_hand !== self.StraightFlush || evaluated_hand !== self.RoyalFlush) {
+            Player.evaluated_hand = self.FourOfAKind;
+        }
+        else if evaluated_hand == self.FullHouse && (evaluated_hand !== self.FourOfAKind || evaluated_hand !== self.StraightFlush || evaluated_hand !== self.RoyalFlush){
+            Player.evaluated_hand = self.FullHouse;
+        }
+        else if evaluated_hand == self.Flush && (.evaluated_hand !== self.FullHouse || evaluated_hand !== self.FourOfAKind || evaluated_hand !== self.StraightFlush || evaluated_hand !== self.RoyalFlush){
+            Player.evaluated_hand = self.Flush;
+        }
+        else if evaluated_hand == self.Straight && (evaluated_hand !== self.Flush || evaluated_hand !== self.FullHouse || evaluated_hand !== self.FourOfAKind || evaluated_hand !== self.StraightFlush || evaluated_hand !== self.RoyalFlush){
+            Player.evaluated_hand = self.Straight;
+        }
+        else if evaluated_hand == self.ThreeOfAKind && (evaluated_hand !== self.Straight || evaluated_hand !== self.Flush || evaluated_hand !== self.FullHouse || evaluated_hand !== self.FourOfAKind || evaluated_hand !== self.StraightFlush || evaluated_hand !== self.RoyalFlush){
+            Player.evaluated_hand = self.ThreeOfAKind;
+        }
+        else if evaluated_hand == self.TwoPair && (evaluated_hand !== self.ThreeOfAKind || evaluated_hand !== self.Straight || evaluated_hand !== self.Flush || evaluated_hand !== self.FullHouse || evaluated_hand !== self.FourOfAKind || evaluated_hand !== self.StraightFlush || evaluated_hand !== self.RoyalFlush){
+            Player.evaluated_hand = self.TwoPair;
+        }
+        else if evaluated_hand == self.Pair && (evaluated_hand !== self.TwoPair || evaluated_hand !== self.ThreeOfAKind || evaluated_hand !== self.Straight || evaluated_hand !== self.Flush || evaluated_hand !== self.FullHouse || evaluated_hand !== self.FourOfAKind || evaluated_hand !== self.StraightFlush || evaluated_hand !== self.RoyalFlush){
+            Player.evaluated_hand = self.Pair;
+        }
+        else if evaluated_hand == self.HighCard && (evaluated_hand !== self.Pair || evaluated_hand !== self.TwoPair || evaluated_hand !== self.ThreeOfAKind || evaluated_hand !== self.Straight || evaluated_hand !== self.Flush || evaluated_hand !== self.FullHouse || evaluated_hand !== self.FourOfAKind || evaluated_hand !== self.StraightFlush || evaluated_hand !== self.RoyalFlush){
+            Player.evaluated_hand == self.HighCard;
+        }
+    }
+}
