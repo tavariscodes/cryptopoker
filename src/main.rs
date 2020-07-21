@@ -16,7 +16,4 @@ fn main() {
 
     // test_table.player_joined(test_player);
     // test_table.start_round();
-
-
-    
 }

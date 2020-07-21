@@ -32,22 +32,23 @@ pub struct Table {
     pub big_blind: f64,
     pub min_buyin: f64,
     pub max_buyin: f64,
-    pub seat_count: u8,
-    pub active_seat: u8,    /// seat # of the player whose turn it is
+    pub seat_count: usize,
+    pub active_seat: usize,    /// seat # of the player whose turn it is
+    pub dealer_seat: usize,
     community_cards: [Option<deck::Card>; 5],
     pub seats: Vec<player::Player>,     // make private
     deck: deck::Deck,
-    dealer_seat: u8,    //  gets vector of seats
     pot: Pot,
-    players_sitting: u8,
-    players_in_hand: u8,
+    pub players_seated: usize, /// # of players sitting at table
+    players_sitting_in: usize,
+    players_in_hand: usize,
     betting_round: Option<BettingRound>,
 }   
 
 impl Table {
     /// Create a new table 
     pub fn new(id: String, small_blind: f64, big_blind: f64, min_buyin: f64,  max_buyin: f64,
-        seat_count: u8) -> Table {
+        seat_count: usize) -> Table {
         Table {
             id: id,
             small_blind: small_blind,
@@ -61,33 +62,40 @@ impl Table {
             deck: deck::Deck::new(),
             community_cards: [None, None, None, None, None],
             pot: Pot::new(),
-            players_sitting: 0,
+            players_seated: 0,
+            players_sitting_in: 0,
             players_in_hand: 0,
             betting_round: None
         }
     }
-    // add method to increase # of players_sitting
-    // when player sits down. 
-
     
+    /// finds next active player at table
+    fn find_next_player(&mut self, offset: usize, status: String) -> usize {
+        // use offset value to find
+        // next active player from 
+        // offset. 
+        
+    }
 
     /// Starts a new round
     pub fn start_round(&mut self) {
-        if self.players_sitting > 1 {
+        if self.players_seated > 1 {
             self.deck.shuffle();    
             self.betting_round = Some(BettingRound::Preflop);
             for player in self.seats.iter_mut() {
                 player.prepare_new_round();
+                // find next active player and 
+                // make them the dealer
             }
         };
         // deal cards
         // post blinds
-    }
+}
 
     /// Adds player to table 
     pub fn player_joined(&mut self, player: player::Player, seat: u8, chips: f64) {
         self.seats.push(player);
-        self.players_sitting += 1;
+        self.players_seated += 1;
     }
 }
 
