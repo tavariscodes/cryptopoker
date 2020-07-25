@@ -7,7 +7,7 @@
 use rand;
 
 /// The four different card suits 
-#[derive(Debug)]
+#[derive(Debug, PartialEq)]
 pub enum Suit {
     Club,
     Heart,
@@ -47,6 +47,25 @@ pub enum Rank {
 }
 
 impl Rank {
+
+    pub fn val(&self) -> u8 {
+        match &self {
+            Rank::Two => 2,
+            Rank::Three => 3,
+            Rank::Four => 4,
+            Rank::Five => 5,
+            Rank::Six => 6,
+            Rank::Seven => 7,
+            Rank::Eight => 8,
+            Rank::Nine => 9,
+            Rank::Ten => 10,
+            Rank::Jack => 11,
+            Rank::Queen => 12,
+            Rank::King => 13,
+            Rank::Ace => 14,
+        }
+    }
+
     pub fn get_rank(val: u8) -> Rank {
         match val {
             2 => Rank::Two ,
@@ -71,7 +90,7 @@ impl Rank {
 
 /// Represents a card which contains 
 /// a rank and a suit
-#[derive(Debug)]
+#[derive(Debug, PartialEq)]
 pub struct Card {
     pub rank: Rank,
     pub suit: Suit
@@ -88,7 +107,7 @@ impl Card {
 }
 
 /// Deck containing 52 playing cards
-#[derive(Debug)]
+#[derive(Debug, PartialEq)]
 pub struct Deck {
     pub cards: Vec<Card>,
     next_card: u8,

@@ -25,7 +25,7 @@ pub struct Player {
     chips: f64,                     
     room: Option<String>,           // consider changing type to `table` (events) instead
     sitting_on_table: Option<String>,       // table id 
-    seat: Option<u8>,                       // seat number player is sitting
+    seat: Option<usize>,                       // seat number player is sitting
     cards: Option<Hand> ,           // players card
     evaluated_hand: String          // winning hand type
 }
@@ -66,7 +66,7 @@ impl Player {
     }
     
     /// Sits player onto table
-    pub fn sit_on_table(&mut self, table_id: String, seat: u8, chips: f64) {
+    pub fn sit_on_table(&mut self, table_id: String, seat: usize, chips: f64) {
         // remove # of chips player buys in
         // on table
         self.chips -= chips;

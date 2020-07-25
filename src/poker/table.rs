@@ -11,7 +11,7 @@ use crate::poker::player;
 #[derive(Debug)]
 struct Pot {
     amount: f64,
-    contributers: Vec<String>       // change to vec of type "Players"
+    contributers: Vec<player::Player>       // change to vec of type "Players"
 }
 
 /// Creates a new pot, with amount set to 0
@@ -35,11 +35,11 @@ pub struct Table {
     pub seat_count: usize,
     pub active_seat: usize,    /// seat # of the player whose turn it is
     pub dealer_seat: usize,
+    pub players_seated: usize, /// # of players sitting at table
     community_cards: [Option<deck::Card>; 5],
     pub seats: Vec<player::Player>,     // make private
     deck: deck::Deck,
     pot: Pot,
-    pub players_seated: usize, /// # of players sitting at table
     players_sitting_in: usize,
     players_in_hand: usize,
     betting_round: Option<BettingRound>,
@@ -93,9 +93,10 @@ impl Table {
 }
 
     /// Adds player to table 
-    pub fn player_joined(&mut self, player: player::Player, seat: u8, chips: f64) {
+    pub fn player_joined(&mut self, player: player::Player, seat: usize, chips: f64) {
         self.seats.push(player);
         self.players_seated += 1;
+        
     }
 }
 
