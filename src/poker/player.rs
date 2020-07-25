@@ -42,28 +42,28 @@ pub enum HandRanking {
             let mut flush_exists = false;
             let mut flush_cards = vec![];
             let mut x = 0;
-            let mut card_suit0 = playable_cards[0].suit.to_char();
-            let mut card_suit1 = playable_cards[1].suit.to_char();
-            let mut card_suit2 = playable_cards[2].suit.to_char();
-            let mut card_suit3 = playable_cards[3].suit.to_char();
-            let mut card_suit4 = playable_cards[4].suit.to_char();
-            let mut card_suit5 = playable_cards[5].suit.to_char();
-            let mut card_suit6 = playable_cards[6].suit.to_char();
-            let mut card_suits = [card_suit0, card_suit1, card_suit2, card_suit3,card_suit4, card_suit5, card_suit6];
+            // let mut card_suit0 = playable_cards[0].suit.to_char();
+            // let mut card_suit1 = playable_cards[1].suit.to_char();
+            // let mut card_suit2 = playable_cards[2].suit.to_char();
+            // let mut card_suit3 = playable_cards[3].suit.to_char();
+            // let mut card_suit4 = playable_cards[4].suit.to_char();
+            // let mut card_suit5 = playable_cards[5].suit.to_char();
+            // let mut card_suit6 = playable_cards[6].suit.to_char();
+            // let mut card_suits = [card_suit0, card_suit1, card_suit2, card_suit3,card_suit4, card_suit5, card_suit6];
             for x in 0..6{
-                if card_suits[x] == 'h'{
+                if playable_cards[x].suit.to_char() == 'h'{
                     heart_cards[heart_count] = playable_cards[x].rank;
                     heart_count += 1;
                 }
-                else if card_suits[x] == 'c'{
+                else if playable_cards[x].suit.to_char() == 'c'{
                     club_cards[club_count] = playable_cards[x].rank;
                     club_count += 1;
                 }
-                else if card_suits[x] == 's'{
+                else if playable_cards[x].suit.to_char() == 's'{
                     spade_cards[spade_count] = playable_cards[x].rank;
                     spade_count += 1;
                 }
-                else if card_suits[x] == 'd'{
+                else if playable_cards[x].suit.to_char() == 'd'{
                     diamond_cards[diamond_count] = playable_cards[x].rank;
                     diamond_count += 1;
                 }

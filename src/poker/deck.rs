@@ -32,18 +32,18 @@ impl Suit {
 /// The fourteen different card rankings
 pub enum Rank {
     Two = 2,
-    Three,
-    Four,
-    Five,
-    Six,
-    Seven,
-    Eight,
-    Nine,
-    Ten,
-    Jack,
-    Queen,
-    King,
-    Ace
+    Three = 3,
+    Four = 4,
+    Five = 5,
+    Six = 6,
+    Seven = 7,
+    Eight = 8,
+    Nine = 9,
+    Ten = 10,
+    Jack = 11,
+    Queen = 12,
+    King = 13,
+    Ace = 14
 }
 
 impl Rank {
@@ -63,6 +63,23 @@ impl Rank {
             13 => Rank::King,
             14 => Rank::Ace,
             _ => (panic!("Error: INVALID INPUT | valid ranking values are 2-14"))
+        }
+    }
+    pub fn get_val (rank: Rank) -> u8{
+        match rank {
+            Rank::Two => 2,
+            Rank::Three => 3,
+            Rank::Four => 4,
+            Rank::Five => 5,
+            Rank::Six => 6,
+            Rank::Seven => 7,
+            Rank::Eight => 8,
+            Rank::Nine => 9,
+            Rank::Ten => 10,
+            Rank::Jack => 11,
+            Rank::Queen => 12,
+            Rank::King => 13,
+            Rank::Ace => 14
         }
     }
 }
