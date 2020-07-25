@@ -3,6 +3,9 @@ use pokersite::poker::table::*;
 use pokersite::poker::player::*;
 
 fn main() {
+    let mut testvec = vec![1,3,3,2,6,6,5];
+    let sortedvec = testvec.sort();
+    return sortedvec
     // let mut test_deck = Deck::new();
     // assert_eq!(52, test_deck.cards.len());
 

@@ -35,6 +35,11 @@ mod tests {
         table.find_active_seat();
         assert_eq!(table.find_active_seat(), 3);
     }
+    fn blank_test(){
+        let mut testvec = vec![1,3,3,2,6,6,5];
+        let sortedvec = testvec.sort();
+        return sortedvec
+    }
     
     fn test_shuffle() {
         // ensure all 52 cards are in deck.
