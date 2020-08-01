@@ -65,8 +65,8 @@ impl Rank {
             _ => (panic!("Error: INVALID INPUT | valid ranking values are 2-14"))
         }
     }
-    pub fn get_val (rank: Rank) -> u8{
-        match rank {
+    pub fn get_val (&self) -> u8{
+        match self {
             Rank::Two => 2,
             Rank::Three => 3,
             Rank::Four => 4,
@@ -80,6 +80,23 @@ impl Rank {
             Rank::Queen => 12,
             Rank::King => 13,
             Rank::Ace => 14
+        }
+    }
+    pub fn get_rank_string(&self)-> char {
+        match self {
+            Rank::Two => '2',
+            Rank::Three => '3',
+            Rank::Four => '4',
+            Rank::Five => '5',
+            Rank::Six => '6',
+            Rank::Seven => '7',
+            Rank::Eight => '8',
+            Rank::Nine => '9',
+            Rank::Ten => 't',
+            Rank::Jack => 'j',
+            Rank::Queen => 'q',
+            Rank::King => 'k',
+            Rank::Ace => 'a'
         }
     }
 }

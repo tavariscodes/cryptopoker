@@ -10,7 +10,7 @@ use crate::poker::deck;
 
 /// A 2 card poker hand
 #[derive(Debug)]
-pub struct Hand(deck::Card, deck::Card);
+pub struct Hand(pub deck::Card, pub deck::Card);
 pub enum HandRanking {
     HighCard = 1,
     Pair = 2,
@@ -26,148 +26,30 @@ pub enum HandRanking {
 
 
     impl Hand{
-        pub fn Evaluate(&self,community_cards: [deck::Card])->u8{
-            let mut card1 = self.0;
-            let mut card2 = self.1;
-            let playable_cards = vec![card1,card2,community_cards];      
-            let mut heart_count = 0;
-            let mut heart_cards = vec![];
-            let mut club_count = 0;
-            let mut club_cards = vec![];
-            let mut spade_count = 0;
-            let mut spade_cards = vec![];
-            let mut diamond_count = 0;
-            let mut diamond_cards = vec![];
-            let mut rank_vec = vec![];
-            let mut flush_exists = false;
-            let mut flush_cards = vec![];
-            let mut x = 0;
-            // let mut card_suit0 = playable_cards[0].suit.to_char();
-            // let mut card_suit1 = playable_cards[1].suit.to_char();
-            // let mut card_suit2 = playable_cards[2].suit.to_char();
-            // let mut card_suit3 = playable_cards[3].suit.to_char();
-            // let mut card_suit4 = playable_cards[4].suit.to_char();
-            // let mut card_suit5 = playable_cards[5].suit.to_char();
-            // let mut card_suit6 = playable_cards[6].suit.to_char();
-            // let mut card_suits = [card_suit0, card_suit1, card_suit2, card_suit3,card_suit4, card_suit5, card_suit6];
-            for x in 0..6{
-                if playable_cards[x].suit.to_char() == 'h'{
-                    heart_cards[heart_count] = playable_cards[x].rank;
-                    heart_count += 1;
-                }
-                else if playable_cards[x].suit.to_char() == 'c'{
-                    club_cards[club_count] = playable_cards[x].rank;
-                    club_count += 1;
-                }
-                else if playable_cards[x].suit.to_char() == 's'{
-                    spade_cards[spade_count] = playable_cards[x].rank;
-                    spade_count += 1;
-                }
-                else if playable_cards[x].suit.to_char() == 'd'{
-                    diamond_cards[diamond_count] = playable_cards[x].rank;
-                    diamond_count += 1;
-                }
-                rank_vec[x] = playable_cards[x].rank;
-            }
-            // need a way to find mode of vector for now variable will be called mode_of_cards
-            if heart_count >= 5 {
-                let flush_cards = heart_cards;
-                flush_exists = true; 
-            }
-            else if club_count >= 5 {
-                let flush_cards = club_cards;
-                flush_exists = true;
-            }
-            else if spade_count >= 5 {
-                let flush_cards = spade_cards;
-                flush_exists = true;
-            }
-            else if diamond_count >= 5 {
-                let flush_cards = diamond_cards;
-                flush_exists = true;
-            }
-            //HAND EVALUATION
-                //FLUSHES
-            if flush_exists == true{
-                if flush_cards.contains(&14) && flush_cards.contains(&13) && flush_cards.contains(&12) && flush_cards.contains(&11) && flush_cards.contains(&10) == true {
-                    return 10;
-                }
-                else if (flush_cards.contains(&14)  && flush_cards.contains(&2) && flush_cards.contains(&3) && flush_cards.contains(&4) && flush_cards.contains(&5)) || (flush_cards.contains(&2)  && flush_cards.contains(&3) && flush_cards.contains(&4) && flush_cards.contains(&5) && flush_cards.contains(&6)) || (flush_cards.contains(&3)  && flush_cards.contains(&4) && flush_cards.contains(&5) && flush_cards.contains(&6) && flush_cards.contains(&7)) || (flush_cards.contains(&4)  && flush_cards.contains(&5) && flush_cards.contains(&6) && flush_cards.contains(&7) && flush_cards.contains(&8)) || (flush_cards.contains(&5)  && flush_cards.contains(&6) && flush_cards.contains(&7) && flush_cards.contains(&8) && flush_cards.contains(&9)) || (flush_cards.contains(&6)  && flush_cards.contains(&7) && flush_cards.contains(&8) && flush_cards.contains(&9) && flush_cards.contains(&10)) || (flush_cards.contains(&7)  && flush_cards.contains(&8) && flush_cards.contains(&9) && flush_cards.contains(&10) && flush_cards.contains(&11)) || (flush_cards.contains(&8)  && flush_cards.contains(&9) && flush_cards.contains(&10) && flush_cards.contains(&11) && flush_cards.contains(&12)) || (flush_cards.contains(&9)  && flush_cards.contains(&10) && flush_cards.contains(&11) && flush_cards.contains(&12) && flush_cards.contains(&13))== true{
-                    return 9;
-                }
-                else{
-                    return 6;    
-                }
-            }
-                //STRAIGHTS
-            else if rank_vec.contains(&deck::Rank::Ace) && rank_vec.contains(&deck::Rank::King) && rank_vec.contains(&deck::Rank::Queen) && rank_vec.contains(&deck::Rank::Jack) && rank_vec.contains(&deck::Rank::Ten){
-                    return 5;  
-            }
-                //HIGH CARD HANDS
-            else{
-                let number1 = rank_vec[1];
-                let number3 = rank_vec[3];
-                let number5 = rank_vec[5];
-                let mut mode_of_cards_count = 0;
-                let mut nd_mode_of_cards_count = 0;
-            let cards_count1 = rank_vec.iter().filter(|&n| *n == number1).count();
-            let cards_count3 = rank_vec.iter().filter(|&n| *n == number3).count();
-            let cards_count5 = rank_vec.iter().filter(|&n| *n == number5).count();
-            if (cards_count1 >= cards_count3) & (cards_count1 >= cards_count5) & (cards_count3 >= cards_count5){
-                 mode_of_cards_count = cards_count1;
-                let mut mode_of_cards = number1;
-                 nd_mode_of_cards_count = cards_count3;
-                let mut nd_mode_of_cards = number3;
-            }
-            else if (cards_count3 > cards_count1) & (cards_count1 >= cards_count5) {
-                 mode_of_cards_count = cards_count3;
-                let mut mode_of_cards = number3;
-                 nd_mode_of_cards_count = cards_count1;
-                let mut nd_mode_of_cards = number1;
-            }
-            else if (cards_count5 > cards_count1) & (cards_count1 >= cards_count3) {
-                 mode_of_cards_count = cards_count5;
-                let mut mode_of_cards = number5;
-                 nd_mode_of_cards_count = cards_count1;
-                let mut nd_mode_of_cards = number1;
-            }
-            else if (cards_count5 > cards_count1) & (cards_count3 > cards_count1) & (cards_count3 >= cards_count5){
-                 mode_of_cards_count = cards_count3;
-                let mut mode_of_cards = number3;
-                 nd_mode_of_cards_count = cards_count5;
-                let mut nd_mode_of_cards = number5;
-            }
-            else if (cards_count1 >= cards_count3) & (cards_count1 >= cards_count5) & (cards_count5 > cards_count3){
-                 mode_of_cards_count = cards_count1;
-                let mut mode_of_cards = number1;
-                 nd_mode_of_cards_count = cards_count5;
-                let mut nd_mode_of_cards = number5;
-            }
-            else {
-                 mode_of_cards_count = cards_count5;
-                let mut mode_of_cards = number5;
-                 nd_mode_of_cards_count = cards_count3;
-                let mut nd_mode_of_cards = number3;
-            }
-                if mode_of_cards_count == 1{
-                    return 1;
-                }
-                else if mode_of_cards_count == 2 && nd_mode_of_cards_count == 1{
-                    return 2;
-                }
-                else if mode_of_cards_count == 2 && (nd_mode_of_cards_count == 2 || nd_mode_of_cards_count == 3) {
-                    return 3;
-                }
-                else if mode_of_cards_count == 3 && nd_mode_of_cards_count == 1 {
-                    return 4;
-                }
-                else if mode_of_cards_count == 3 && nd_mode_of_cards_count == 2 {
-                    return 7;
-                }
-                else {
-                    return 8;
-                }              
-            }
+        pub fn Evaluate(&self, community_cards: &[Option<deck::Card>; 5])->u8{
+            let mut community_card1 = community_cards[0].as_ref().unwrap();
+            let mut community_card1rank = community_card1.rank.get_rank_string();
+            let mut community_card1suit = community_card1.suit.to_char();
+            let mut communiy_card2 = community_cards[1].as_ref().unwrap();
+            let mut community_card3 = community_cards[2].as_ref().unwrap();
+            let mut community_card4 = community_cards[3].as_ref().unwrap();
+            let mut community_card5 = community_cards[4].as_ref().unwrap();
+            let mut player_cards = vec![&self.0,&self.1]; 
+            use http::{Request, Response};
+
+let mut request = Request::builder();
+request.uri("https://game.synergypoker.net/")
+       .header("User-Agent");
+
+if needs_header() {
+    request.header("", "");
+}
+
+let response = send(request.body(()).unwrap());
+
+fn send(req: Request<()>) -> Response<()> {
+    // ...
+}      
         }
     }
 
@@ -225,7 +107,7 @@ impl Player {
     }
     
     /// Sits player onto table
-    pub fn sit_on_table(&mut self, table_id: String, seat: u8, chips: f64) {
+    pub fn sit_on_table(&mut self, table_id: String, seat: usize, chips: f64) {
         // remove # of chips player buys in
         // on table
         self.chips -= chips;

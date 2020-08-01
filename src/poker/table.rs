@@ -34,7 +34,7 @@ pub struct Table {
     pub max_buyin: f64,
     pub seat_count: u8,
     pub active_seat: u8,    /// seat # of the player whose turn it is
-    community_cards: [Option<deck::Card>; 5],
+    pub community_cards: [Option<deck::Card>; 5],
     pub seats: Vec<player::Player>,     // make private
     deck: deck::Deck,
     pub dealer_seat: usize,    //  gets vector of seats
@@ -69,33 +69,7 @@ impl Table {
     // add method to increase # of players_sitting
     // when player sits down. 
 
-    pub fn find_active_seat(&mut self)-> usize{
-        // let mut next_active_seat = self.dealer_seat + 1;
-        // if next_active_seat == self.seats.len() {
-        //     next_active_seat -= self.seats.len()
-        // }
-        
-        if self.dealer_seat != player::Player.seat{
-            let mut next_active_seat = self.seats[0].seat;
-        }
-        else {
-            let mut next_active_seat= self.dealer_seat + 1;
-        }
-        let mut next_active_index = .find(self.dealer_seat == self.seats.player.seat);
-        next_active_index += 1
-        if next_active_seat == self.seats.len(){
-            next_active_seat -= self.seats.len();
-        }
-        while self.seats[next_active_index].sitting_in == false{
-           
-        next_active_seat += 1;
-            if next_active_seat == self.seats.len(){
-                next_active_seat -= self.seats.len();
-    }
-        }
-        self.dealer_seat = self.seats[next_active_index].player.seat;
-        return next_active_seat;
-    }
+
 
     /// Starts a new round
     pub fn start_round(&mut self) {
@@ -124,6 +98,7 @@ impl Table {
                     
                 }
             }
+
         }
         // deal cards
         // post blinds
@@ -134,6 +109,7 @@ impl Table {
         self.seats.push(player);
         self.players_sitting += 1;
     }
+    
 }
 
 #[derive(Debug)]
@@ -171,62 +147,4 @@ impl BettingRound {
     fn showdown(&self) {}
     
 }
-enum HandRanking {
-    HighCard,
-    Pair,
-    TwoPair,
-    ThreeOfAKind,
-    Straight,
-    Flush,
-    FullHouse,
-    FourOfAKind,
-    StraightFlush,
-    RoyalFlush
-}
-impl HandRanking{
-    fn HandComparison(&self){
-        match HandStrength{
-            HandRanking::HighCard,
-            HandRanking::Pair,
-            HandRanking::TwoPair,
-            HandRanking::ThreeOfAKind,
-            HandRanking::Straight,
-            HandRanking::Flush,
-            HandRanking::FullHouse,
-            HandRanking::FourOfAKind,
-            HandRanking::StraightFlush,
-            HandRanking::RoyalFlush
-        }
-        let mut evaluated_hand = vec![];
-        if evaluated_hand = self.RoyalFlush {
-            Player.evaluated_hand = self.RoyalFlush
-        } 
-        else if evaluated_hand == self.StraightFlush && evaluated_hand !== self.RoyalFlush{
-            Player.evaluated_hand = self.StraightFlush;
-        }
-        else if evaluated_hand == self.FourOfAKind && (evaluated_hand !== self.StraightFlush || evaluated_hand !== self.RoyalFlush) {
-            Player.evaluated_hand = self.FourOfAKind;
-        }
-        else if evaluated_hand == self.FullHouse && (evaluated_hand !== self.FourOfAKind || evaluated_hand !== self.StraightFlush || evaluated_hand !== self.RoyalFlush){
-            Player.evaluated_hand = self.FullHouse;
-        }
-        else if evaluated_hand == self.Flush && (.evaluated_hand !== self.FullHouse || evaluated_hand !== self.FourOfAKind || evaluated_hand !== self.StraightFlush || evaluated_hand !== self.RoyalFlush){
-            Player.evaluated_hand = self.Flush;
-        }
-        else if evaluated_hand == self.Straight && (evaluated_hand !== self.Flush || evaluated_hand !== self.FullHouse || evaluated_hand !== self.FourOfAKind || evaluated_hand !== self.StraightFlush || evaluated_hand !== self.RoyalFlush){
-            Player.evaluated_hand = self.Straight;
-        }
-        else if evaluated_hand == self.ThreeOfAKind && (evaluated_hand !== self.Straight || evaluated_hand !== self.Flush || evaluated_hand !== self.FullHouse || evaluated_hand !== self.FourOfAKind || evaluated_hand !== self.StraightFlush || evaluated_hand !== self.RoyalFlush){
-            Player.evaluated_hand = self.ThreeOfAKind;
-        }
-        else if evaluated_hand == self.TwoPair && (evaluated_hand !== self.ThreeOfAKind || evaluated_hand !== self.Straight || evaluated_hand !== self.Flush || evaluated_hand !== self.FullHouse || evaluated_hand !== self.FourOfAKind || evaluated_hand !== self.StraightFlush || evaluated_hand !== self.RoyalFlush){
-            Player.evaluated_hand = self.TwoPair;
-        }
-        else if evaluated_hand == self.Pair && (evaluated_hand !== self.TwoPair || evaluated_hand !== self.ThreeOfAKind || evaluated_hand !== self.Straight || evaluated_hand !== self.Flush || evaluated_hand !== self.FullHouse || evaluated_hand !== self.FourOfAKind || evaluated_hand !== self.StraightFlush || evaluated_hand !== self.RoyalFlush){
-            Player.evaluated_hand = self.Pair;
-        }
-        else if evaluated_hand == self.HighCard && (evaluated_hand !== self.Pair || evaluated_hand !== self.TwoPair || evaluated_hand !== self.ThreeOfAKind || evaluated_hand !== self.Straight || evaluated_hand !== self.Flush || evaluated_hand !== self.FullHouse || evaluated_hand !== self.FourOfAKind || evaluated_hand !== self.StraightFlush || evaluated_hand !== self.RoyalFlush){
-            Player.evaluated_hand == self.HighCard;
-        }
-    }
-}
+

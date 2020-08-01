@@ -22,23 +22,22 @@ mod tests {
         table.start_round();
         assert_eq!(table.seats.len(), 1);
     }
+
     #[test]
-    fn test_find_active_seat(){
-        let table_id= String::from("721-11");
-        let mut player1 = player::Player::new(String::from("Tavaris"), 20.00, true);
-        let mut player2 = player::Player::new(String::from("Whoops"), 20.00, true);
-        let mut player3 = player::Player::new(String::from("Jack"), 20.00, true);
-        let mut table = table::Table::new(table_id, 0.10, 0.20, 5.00, 20.00, 6);
-        table.player_joined(player1,3,20.00);
-        table.player_joined(player2,4,20.00);
-        table.player_joined(player3,6,20.00);
-        table.find_active_seat();
-        assert_eq!(table.find_active_seat(), 3);
-    }
-    fn blank_test(){
-        let mut testvec = vec![1,3,3,2,6,6,5];
-        let sortedvec = testvec.sort();
-        return sortedvec
+    fn test_evaluate(){   
+        let mut card1 = deck::Card::new(deck::Rank::Ace, deck::Suit::Spade);
+        let mut card2 = deck::Card::new(deck::Rank::Queen, deck::Suit::Spade);
+         
+        let mut player_hand = player::Hand(card1, card2);
+
+        let mut card3 = deck::Card::new(deck::Rank::Six, deck::Suit::Spade);
+        let mut card4 = deck::Card::new(deck::Rank::Eight, deck::Suit::Spade);
+        let mut card5 = deck::Card::new(deck::Rank::Two, deck::Suit::Spade);
+        let mut card6 = deck::Card::new(deck::Rank::Ace, deck::Suit::Diamond);
+        let mut card7 = deck::Card::new(deck::Rank::Ace, deck::Suit::Club);
+        let mut community_cards = [Some(card3), Some(card4), Some(card5), Some(card6), Some(card7)];
+        let cooter =player_hand.Evaluate(&community_cards);
+        assert_eq!(cooter, 6)
     }
     
     fn test_shuffle() {
